@@ -1,0 +1,143 @@
+/**
+ * Java 程式設計(一) Assignment 2: Basic Statistics
+ * 模仿機率作業架構，建立 13 個統計學基礎概念的獨立類別
+ */
+
+// 1. 統計學的定義
+class StatDefinition {
+    public void display() { System.out.println("1. 統計學：收集、處理、分析及解釋數據的科學。"); }
+}
+
+// 2. 母體與樣本 (Population & Sample)
+class PopulationAndSample {
+    String P = "研究對象的全體";
+    public void display() { System.out.println("2. 母體 (Population): " + P); }
+}
+
+// 3. 變數 (Variable)
+class DataVariable {
+    String V = "用來衡量資料特徵的數值或類別";
+    public void display() { System.out.println("3. 變數 (Variable): " + V); }
+}
+
+// 4. 算術平均數 (Mean)
+class MeanFormula {
+    public double calculate(double sum, double n) {
+        return sum / n; // 總和除以資料個數
+    }
+}
+
+// 5. 全距 (Range)
+class RangeFormula {
+    public double getRange(double max, double min) {
+        return max - min; // 最大值減最小值
+    }
+}
+
+// 6. 母體變異數 (Population Variance)
+class VarianceFormula {
+    public double getVariance(double sumOfSquaredDiff, double n) {
+        return sumOfSquaredDiff / n; // 離均差平方和 / N
+    }
+}
+
+// 7. 標準差 (Standard Deviation)
+class StdDevFormula {
+    public double getStdDev(double variance) {
+        return Math.sqrt(variance); // 變異數的平方根
+    }
+}
+
+// 8. Z分數 / 標準化 (Z-Score)
+class ZScoreFormula {
+    public double getZScore(double x, double mean, double stdDev) {
+        return (x - mean) / stdDev; // 衡量數值距離平均數幾個標準差
+    }
+}
+
+// 9. 變異係數 (Coefficient of Variation, CV)
+class CVFormula {
+    public double getCV(double stdDev, double mean) {
+        return (stdDev / mean) * 100; // 比較不同單位的資料離散程度 (%)
+    }
+}
+
+// 10. 期望值 (Expected Value)
+class ExpectedValue {
+    public double calculate(double[] values, double[] probs) {
+        double ev = 0;
+        for (int i = 0; i < values.length; i++) {
+            ev += values[i] * probs[i];
+        }
+        return ev;
+    }
+}
+
+// 11. 共變異數 (Covariance) - 簡化計算
+class Covariance {
+    public double calc(double sumOfProductDiff, double n) {
+        return sumOfProductDiff / n; // 衡量兩個變數的共同變化趨勢
+    }
+}
+
+// 12. 常態分佈資料展示 (Normal Distribution)
+class NormalDistStats {
+    public void print(double mean, double std) {
+        System.out.println("12. 常態分佈：平均數=" + mean + ", 標準差=" + std);
+    }
+}
+
+// 13. 經驗法則 (Empirical Rule) - 95% 區間
+class EmpiricalRule {
+    public void printRange(double mean, double std) {
+        double lower = mean - 2 * std;
+        double upper = mean + 2 * std;
+        System.out.println("13. 經驗法則：大約 95% 的數據落在 [" + lower + " ~ " + upper + "]");
+    }
+}
+
+// --- 執行類別 ---
+public class StatisticsAssignment {
+    public static void main(String[] args) {
+        System.out.println("=== 基礎統計學 13 題獨立物件輸出 ===\n");
+
+        // 1-3. 概念定義
+        new StatDefinition().display();
+        new PopulationAndSample().display();
+        new DataVariable().display();
+        
+        // 4. 計算平均數 (總和 450，共 5 筆資料)
+        System.out.println("4. 平均數 (Mean): " + new MeanFormula().calculate(450, 5));
+        
+        // 5. 計算全距 (最大值 95，最小值 40)
+        System.out.println("5. 全距 (Range): " + new RangeFormula().getRange(95, 40));
+        
+        // 6. 計算變異數 (離均差平方和 200，共 5 筆資料)
+        double variance = new VarianceFormula().getVariance(200, 5);
+        System.out.println("6. 變異數 (Variance): " + variance);
+        
+        // 7. 計算標準差
+        double stdDev = new StdDevFormula().getStdDev(variance);
+        System.out.println("7. 標準差 (Std Dev): " + String.format("%.2f", stdDev));
+        
+        // 8. 計算 Z 分數 (原始分數 85，平均 70，標準差 10)
+        System.out.println("8. Z分數 (Z-Score): " + new ZScoreFormula().getZScore(85, 70, 10));
+        
+        // 9. 計算變異係數 (標準差 15，平均 150)
+        System.out.println("9. 變異係數 (CV): " + new CVFormula().getCV(15, 150) + "%");
+        
+        // 10. 期望值計算 (擲骰子點數與機率，此處簡化示範)
+        double[] vals = {100, 200, 300};
+        double[] probs = {0.2, 0.5, 0.3};
+        System.out.println("10. 期望值 (Expected Value): " + new ExpectedValue().calculate(vals, probs));
+        
+        // 11. 共變異數 (乘積差總和 120，共 10 筆資料)
+        System.out.println("11. 共變異數 (Covariance): " + new Covariance().calc(120, 10));
+        
+        // 12-13. 常態分佈與經驗法則
+        double mu = 100; // 平均數
+        double sigma = 15; // 標準差
+        new NormalDistStats().print(mu, sigma);
+        new EmpiricalRule().printRange(mu, sigma);
+    }
+}
